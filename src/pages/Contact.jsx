@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, Send, CheckCircle, Github, Linkedin, Twitter } from 'lucide-react';
+import SEO from '../components/SEO';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -136,7 +137,15 @@ const Contact = () => {
   ];
 
   return (
-    <div className="min-h-screen pt-20">
+    <>
+      <SEO 
+        title="Contact Us - Get In Touch | Axle Solutions"
+        description="Ready to transform your business? Contact Axle Solutions for DevOps consulting, cloud solutions, and custom software development. Let's discuss your project today."
+        keywords="contact axle solutions, get quote, software consultation, DevOps inquiry, project discussion, technology consulting"
+        canonical="https://axle-solutions.vercel.app/contact"
+        type="website"
+      />
+      <div className="min-h-screen pt-20">
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-primary-50 via-white to-primary-100 dark:from-dark-900 dark:via-dark-800 dark:to-dark-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -405,7 +414,8 @@ const Contact = () => {
           </div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 };
 

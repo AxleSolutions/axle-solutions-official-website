@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Github, Linkedin, Mail, Code, Server, Cloud, Database, GitBranch, Container } from 'lucide-react';
+import SEO from '../components/SEO';
 
 const About = () => {
   useEffect(() => {
@@ -60,7 +61,14 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen pt-20">
+    <>
+      <SEO 
+        title="About Us - Axle Solutions | Expert Software & DevOps Team"
+        description="Meet the expert team at Axle Solutions. Passionate technologists specializing in DevOps, cloud infrastructure, and full-stack development. Learn about our mission and expertise."
+        keywords="about axle solutions, DevOps experts, software development team, cloud engineers, full-stack developers, technology consultants"
+        canonical="https://axle-solutions.vercel.app/about"
+      />
+      <div className="min-h-screen pt-20">
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-primary-50 via-white to-primary-100 dark:from-dark-900 dark:via-dark-800 dark:to-dark-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -271,6 +279,7 @@ const About = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 
