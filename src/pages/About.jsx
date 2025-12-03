@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Github, Linkedin, Mail, Code, Server, Cloud, Database, GitBranch, Container } from 'lucide-react';
+import SEO from '../components/SEO';
 
 const About = () => {
   useEffect(() => {
@@ -28,7 +29,7 @@ const About = () => {
       name: 'Anushka Praveen',
       role: 'Co-Founder & Software Engineer',
       bio: 'Anushka is a skilled Software Engineer with extensive experience in full-stack development and building scalable, high-performance applications. He specializes in React, Node.js, and microservices architecture, with strong expertise in cloud-native development. His focus lies in crafting efficient, maintainable, and user-centric software solutions that drive real-world impact.',
-      image: 'https://media.licdn.com/dms/image/v2/D5603AQGyVKCdgXdmNg/profile-displayphoto-shrink_800_800/B56ZS4pRcPGUAc-/0/1738264615891?e=1764201600&v=beta&t=2hizGDijVeYI1pnv8dgNGmDPhATYQwghTSUSDbS-EFI',
+      image: 'https://media.licdn.com/dms/image/v2/D5603AQGyVKCdgXdmNg/profile-displayphoto-shrink_800_800/B56ZS4pRcPGUAc-/0/1738264615891?e=1766620800&v=beta&t=Se_hqYFm3jEhSu7DB4SyFyiEw4Hn_YCoPRqDLg48Hgo',
       skills: ['React', 'Node.js', 'TypeScript', 'MongoDB', 'GraphQL', 'Azure'],
       social: {
         github: 'https://github.com/AnushkaPraveen',
@@ -40,7 +41,7 @@ const About = () => {
       name: 'Pasidu Chamod',
       role: 'Co-Founder & DevOps Engineer',
       bio: 'Pasidu is an aspiring DevOps engineer passionate about cloud technologies, automation, and modern software delivery. Currently pursuing a Computer Science degree at the University of Jaffna, he’s gaining hands-on experience with Docker, Kubernetes, GitHub Actions, and CI/CD workflows to build scalable and reliable infrastructure solutions.',
-      image: 'https://media.licdn.com/dms/image/v2/D5603AQFcCyVTqw6L9Q/profile-displayphoto-shrink_800_800/B56ZWWSIJ2GQAg-/0/1741983090059?e=1764201600&v=beta&t=4uzMIztIvlwH5G9oYmFw6UH_KwCia_hmwT2RB6mARgA',
+      image: 'https://media.licdn.com/dms/image/v2/D5603AQFcCyVTqw6L9Q/profile-displayphoto-shrink_800_800/B56ZWWSIJ2GQAg-/0/1741983090059?e=1766620800&v=beta&t=Y82qOgqmkiGOr3jVeboeuboM8oxFw4mTNeMwI3tZNCA',
       skills: ['AWS', 'Kubernetes', 'Docker', 'Terraform', 'Jenkins', 'Python'],
       social: {
         github: 'https://github.com/Pasiduchamod',
@@ -60,7 +61,14 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen pt-20">
+    <>
+      <SEO 
+        title="About Us - Axle Solutions | Expert Software & DevOps Team"
+        description="Meet the expert team at Axle Solutions. Passionate technologists specializing in DevOps, cloud infrastructure, and full-stack development. Learn about our mission and expertise."
+        keywords="about axle solutions, DevOps experts, software development team, cloud engineers, full-stack developers, technology consultants"
+        canonical="https://axle-solutions.vercel.app/about"
+      />
+      <div className="min-h-screen pt-20">
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-primary-50 via-white to-primary-100 dark:from-dark-900 dark:via-dark-800 dark:to-dark-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -271,6 +279,7 @@ const About = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 

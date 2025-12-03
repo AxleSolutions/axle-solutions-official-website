@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Zap, Users, Target, TrendingUp } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import SEO from '../components/SEO';
 import logo from "../assets/logo.svg"; // dark mode logo
 import logolight from "../assets/logo_light.svg"; // light mode logo
 
@@ -53,7 +54,14 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <>
+      <SEO 
+        title="Axle Solutions - DevOps Consulting & Custom Software Development"
+        description="Transform your business with professional DevOps consulting, cloud solutions, and custom software development. Expert team delivering scalable, innovative technology solutions."
+        keywords="DevOps consulting, software development, cloud solutions, web development, mobile apps, AWS, Azure, custom software, IT consulting, digital transformation"
+        canonical="https://axle-solutions.vercel.app/"
+      />
+      <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-50 via-white to-primary-100 dark:from-dark-900 dark:via-dark-800 dark:to-dark-900">
         {/* Animated background elements */}
@@ -176,6 +184,7 @@ const Home = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 

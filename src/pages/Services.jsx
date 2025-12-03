@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import SEO from '../components/SEO';
 import { 
   Server, 
   Code, 
@@ -250,7 +251,14 @@ const Services = () => {
   };
 
   return (
-    <div className="min-h-screen pt-20">
+    <>
+      <SEO 
+        title="Our Services - DevOps, Cloud Solutions & Software Development | Axle Solutions"
+        description="Comprehensive technology services including DevOps consulting, cloud solutions, custom software development, mobile apps, security, and infrastructure management."
+        keywords="DevOps services, cloud migration, AWS consulting, Azure services, custom software, mobile app development, infrastructure management, security consulting, database solutions"
+        canonical="https://axle-solutions.vercel.app/services"
+      />
+      <div className="min-h-screen pt-20">
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-primary-50 via-white to-primary-100 dark:from-dark-900 dark:via-dark-800 dark:to-dark-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -367,7 +375,8 @@ const Services = () => {
           onClose={() => setSelectedService(null)}
         />
       )}
-    </div>
+      </div>
+    </>
   );
 };
 
