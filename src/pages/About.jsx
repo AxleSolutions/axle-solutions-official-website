@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { Github, Linkedin, Mail, Code, Server, Cloud, Database, GitBranch, Container } from 'lucide-react';
 import SEO from '../components/SEO';
+import person1 from '../assets/person1.jpg';
+import person2 from '../assets/person2.jpg';
 
 const About = () => {
   useEffect(() => {
@@ -29,7 +31,7 @@ const About = () => {
       name: 'Anushka Praveen',
       role: 'Co-Founder & Software Engineer',
       bio: 'Anushka is a skilled Software Engineer with extensive experience in full-stack development and building scalable, high-performance applications. He specializes in React, Node.js, and microservices architecture, with strong expertise in cloud-native development. His focus lies in crafting efficient, maintainable, and user-centric software solutions that drive real-world impact.',
-      image: 'https://media.licdn.com/dms/image/v2/D5603AQGyVKCdgXdmNg/profile-displayphoto-shrink_800_800/B56ZS4pRcPGUAc-/0/1738264615891?e=1766620800&v=beta&t=Se_hqYFm3jEhSu7DB4SyFyiEw4Hn_YCoPRqDLg48Hgo',
+      image: person1,
       skills: ['React', 'Node.js', 'TypeScript', 'MongoDB', 'GraphQL', 'Azure'],
       social: {
         github: 'https://github.com/AnushkaPraveen',
@@ -41,7 +43,7 @@ const About = () => {
       name: 'Pasidu Chamod',
       role: 'Co-Founder & DevOps Engineer',
       bio: 'Pasidu is an aspiring DevOps engineer passionate about cloud technologies, automation, and modern software delivery. Currently pursuing a Computer Science degree at the University of Jaffna, he’s gaining hands-on experience with Docker, Kubernetes, GitHub Actions, and CI/CD workflows to build scalable and reliable infrastructure solutions.',
-      image: 'https://media.licdn.com/dms/image/v2/D5603AQFcCyVTqw6L9Q/profile-displayphoto-shrink_800_800/B56ZWWSIJ2GQAg-/0/1741983090059?e=1766620800&v=beta&t=Y82qOgqmkiGOr3jVeboeuboM8oxFw4mTNeMwI3tZNCA',
+      image: person2,
       skills: ['AWS', 'Kubernetes', 'Docker', 'Terraform', 'Jenkins', 'Python'],
       social: {
         github: 'https://github.com/Pasiduchamod',
