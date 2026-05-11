@@ -59,7 +59,6 @@ const Home = () => {
         title="Axle Solutions - DevOps Consulting & Custom Software Development"
         description="Transform your business with professional DevOps consulting, cloud solutions, and custom software development. Expert team delivering scalable, innovative technology solutions."
         keywords="DevOps consulting, software development, cloud solutions, web development, mobile apps, AWS, Azure, custom software, IT consulting, digital transformation"
-        canonical="https://axle-solutions.vercel.app/"
       />
       <div className="min-h-screen">
       {/* Hero Section */}

@@ -142,7 +142,6 @@ const Contact = () => {
         title="Contact Us - Get In Touch | Axle Solutions"
         description="Ready to transform your business? Contact Axle Solutions for DevOps consulting, cloud solutions, and custom software development. Let's discuss your project today."
         keywords="contact axle solutions, get quote, software consultation, DevOps inquiry, project discussion, technology consulting"
-        canonical="https://axle-solutions.vercel.app/contact"
         type="website"
       />
       <div className="min-h-screen pt-20">

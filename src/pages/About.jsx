@@ -68,7 +68,6 @@ const About = () => {
         title="About Us - Axle Solutions | Expert Software & DevOps Team"
         description="Meet the expert team at Axle Solutions. Passionate technologists specializing in DevOps, cloud infrastructure, and full-stack development. Learn about our mission and expertise."
         keywords="about axle solutions, DevOps experts, software development team, cloud engineers, full-stack developers, technology consultants"
-        canonical="https://axle-solutions.vercel.app/about"
       />
       <div className="min-h-screen pt-20">
       {/* Hero Section */}
