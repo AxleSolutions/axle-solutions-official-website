@@ -2,4 +2,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://axle-solutions.vercel.app/sitemap.xml
+Sitemap: https://www.axlesolutions.web.lk/sitemap.xml

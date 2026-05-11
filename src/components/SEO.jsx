@@ -5,13 +5,13 @@ const SEO = ({
   title = 'Axle Solutions - Powering Your Digital Drive',
   description = 'Professional DevOps consulting, cloud solutions, and custom software development services. Transform your business with expert technology solutions.',
   keywords = 'DevOps, cloud solutions, software development, web development, mobile app development, AWS, Azure, custom software, IT consulting',
-  image = 'https://axle-solutions.vercel.app/og-image.jpg',
+  image = 'https://www.axlesolutions.web.lk/og-image.jpg',
   type = 'website',
   author = 'Axle Solutions',
   canonical = ''
 }) => {
   const location = useLocation();
-  const siteUrl = 'https://axle-solutions.vercel.app'; // Update with your actual domain
+  const siteUrl = 'https://www.axlesolutions.web.lk'; // Update with your actual domain
   const currentUrl = canonical || `${siteUrl}${location.pathname}`;
 
   useEffect(() => {

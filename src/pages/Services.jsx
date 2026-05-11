@@ -256,7 +256,6 @@ const Services = () => {
         title="Our Services - DevOps, Cloud Solutions & Software Development | Axle Solutions"
         description="Comprehensive technology services including DevOps consulting, cloud solutions, custom software development, mobile apps, security, and infrastructure management."
         keywords="DevOps services, cloud migration, AWS consulting, Azure services, custom software, mobile app development, infrastructure management, security consulting, database solutions"
-        canonical="https://axle-solutions.vercel.app/services"
       />
       <div className="min-h-screen pt-20">
       {/* Hero Section */}
