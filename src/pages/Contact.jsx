@@ -1,6 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, Send, CheckCircle, Github, Linkedin, Twitter } from 'lucide-react';
+import { motion } from 'framer-motion';
+import Tilt from 'react-parallax-tilt';
 import SEO from '../components/SEO';
+import ParticleBackground from '../components/ParticleBackground';
+
+const elegantReveal = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } 
+  },
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    },
+  },
+};
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -144,47 +167,88 @@ const Contact = () => {
         keywords="contact axle solutions, get quote, software consultation, DevOps inquiry, project discussion, technology consulting"
         type="website"
       />
-      <div className="min-h-screen pt-20">
+      <div className="min-h-screen pt-20 relative overflow-hidden bg-gray-50 dark:bg-black">
+        
+        {/* Interactive Particles Background */}
+        <ParticleBackground />
+
+        {/* Abstract animated blurred glow */}
+        <div className="absolute top-[-20%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-primary-500/10 dark:bg-primary-500/20 blur-[100px] -z-10 animate-float translate-z-0 pointer-events-none"></div>
+        <div className="absolute bottom-[20%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-indigo-500/10 dark:bg-indigo-500/10 blur-[120px] -z-10 animate-float translate-z-0 pointer-events-none" style={{ animationDelay: '2s' }}></div>
+
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-primary-50 via-white to-primary-100 dark:from-dark-900 dark:via-dark-800 dark:to-dark-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="section-title animate-fade-in">Get In Touch</h1>
-          <p className="section-subtitle animate-fade-in" style={{ animationDelay: '100ms' }}>
+      <section className="py-20 relative z-10">
+        <motion.div 
+          initial="hidden"
+          animate="visible"
+          variants={staggerContainer}
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
+        >
+          <motion.h1 
+            variants={elegantReveal}
+            className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white mb-6"
+          >
+            Get In Touch
+          </motion.h1>
+          <motion.p 
+            variants={elegantReveal}
+            className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto"
+          >
             We'd love to hear from you. Let's start a conversation.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
       </section>
 
       {/* Contact Section */}
-      <section className="py-20 bg-white dark:bg-dark-900">
+      <section className="py-20 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-12"
+          >
             {/* Contact Form */}
-            <div className="scroll-animate">
-              <div className="card p-8">
-                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
-                  Send Us a Message
-                </h2>
+            <motion.div variants={elegantReveal} className="h-full">
+              <Tilt
+                tiltMaxAngleX={2}
+                tiltMaxAngleY={2}
+                perspective={1500}
+                scale={1.01}
+                transitionSpeed={2000}
+                className="h-full"
+              >
+                <div className="bg-white/80 dark:bg-dark-800/80 backdrop-blur-xl rounded-3xl p-8 h-full border border-gray-100 dark:border-dark-700/50 shadow-xl shadow-gray-200/50 dark:shadow-none group relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                  
+                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6 relative z-10">
+                    Send Us a Message
+                  </h2>
 
-                {isSubmitted && (
-                  <div className="mb-6 p-4 bg-green-100 dark:bg-green-900/30 border border-green-500 rounded-lg flex items-center space-x-3 animate-fade-in">
-                    <CheckCircle className="w-6 h-6 text-green-600 dark:text-green-400" />
-                    <p className="text-green-800 dark:text-green-200">
-                      Thank you! Your message has been sent successfully. We'll get back to you soon.
-                    </p>
-                  </div>
-                )}
-
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* Name Field */}
-                  <div>
-                    <label
-                      htmlFor="name"
-                      className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
+                  {isSubmitted && (
+                    <motion.div 
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mb-6 p-4 bg-green-100/80 dark:bg-green-900/30 backdrop-blur-md border border-green-500 rounded-2xl flex items-center space-x-3 relative z-10"
                     >
-                      Your Name *
-                    </label>
-                    <input
+                      <CheckCircle className="w-6 h-6 text-green-600 dark:text-green-400" />
+                      <p className="text-green-800 dark:text-green-200">
+                        Thank you! Your message has been sent successfully. We'll get back to you soon.
+                      </p>
+                    </motion.div>
+                  )}
+
+                  <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+                    {/* Name Field */}
+                    <div>
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
+                      >
+                        Your Name *
+                      </label>
+                      <input
                       type="text"
                       id="name"
                       name="name"
@@ -284,29 +348,44 @@ const Contact = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="btn-primary w-full flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className={`w-full relative group overflow-hidden bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-2xl py-4 flex items-center justify-center font-bold text-lg hover:shadow-2xl hover:shadow-primary-500/20 transition-all duration-300 ${
+                      isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:-translate-y-1'
+                    }`}
                   >
-                    {isSubmitting ? (
-                      <>
-                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                        <span>Sending...</span>
-                      </>
-                    ) : (
-                      <>
-                        <Send className="w-5 h-5" />
-                        <span>Send Message</span>
-                      </>
-                    )}
+                    <span className="relative z-10 transition-colors duration-300 group-hover:text-white flex items-center space-x-2">
+                       {isSubmitting ? (
+                        <>
+                          <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
+                          <span>Sending...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Send className="w-5 h-5" />
+                          <span>Send Message</span>
+                        </>
+                      )}
+                    </span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary-600 to-indigo-600 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out z-0"></div>
                   </button>
                 </form>
-              </div>
-            </div>
+                </div>
+              </Tilt>
+            </motion.div>
 
             {/* Contact Information */}
-            <div className="space-y-8 scroll-animate" style={{ animationDelay: '100ms' }}>
-              {/* Contact Details */}
-              <div className="card p-8">
-                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+            <motion.div variants={elegantReveal} className="space-y-8">
+              <Tilt
+                tiltMaxAngleX={2}
+                tiltMaxAngleY={2}
+                perspective={1500}
+                scale={1.01}
+                transitionSpeed={2000}
+                className="h-full"
+              >
+              <div className="flex flex-col gap-8 h-full">
+                <div className="bg-white/80 dark:bg-dark-800/80 backdrop-blur-xl rounded-3xl p-8 border border-gray-100 dark:border-dark-700/50 shadow-xl shadow-gray-200/50 dark:shadow-none relative overflow-hidden group flex-grow flex flex-col">
+                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6 relative z-10">
                   Contact Information
                 </h2>
                 <p className="text-gray-600 dark:text-gray-400 mb-8">
@@ -344,14 +423,15 @@ const Contact = () => {
               </div>
 
               {/* Social Media */}
-              <div className="card p-8">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                  Follow Us
-                </h2>
-                <p className="text-gray-600 dark:text-gray-400 mb-6">
-                  Stay connected with us on social media for updates and insights.
-                </p>
-                <div className="flex space-x-4">
+                <div className="bg-white/80 dark:bg-dark-800/80 backdrop-blur-xl rounded-3xl p-8 border border-gray-100 dark:border-dark-700/50 shadow-xl shadow-gray-200/50 dark:shadow-none relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 relative z-10">
+                    Follow Us
+                  </h2>
+                  <p className="text-gray-600 dark:text-gray-400 mb-6 relative z-10">
+                    Stay connected with us on social media for updates and insights.
+                  </p>
+                  <div className="flex space-x-4 relative z-10">
                   {socialLinks.map((social, index) => (
                     <a
                       key={index}
@@ -368,30 +448,33 @@ const Contact = () => {
               </div>
 
               {/* Office Hours */}
-              <div className="card p-8 bg-gradient-to-br from-primary-600 to-primary-700 text-white">
-                <h2 className="text-2xl font-bold mb-6">Office Hours</h2>
-                <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <span className="font-semibold">Monday - Friday</span>
-                    <span>9:00 AM - 5:00 PM</span>
+                <div className="bg-gradient-to-br from-primary-600 to-primary-700 text-white rounded-3xl p-8 shadow-xl shadow-primary-500/20 relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                  <h2 className="text-2xl font-bold mb-6 relative z-10">Office Hours</h2>
+                  <div className="space-y-3 relative z-10">
+                    <div className="flex justify-between">
+                      <span className="font-semibold">Monday - Friday</span>
+                      <span>9:00 AM - 5:00 PM</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="font-semibold">Saturday</span>
+                      <span>9:00 AM - 12:30 PM</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="font-semibold">Sunday</span>
+                      <span>Closed</span>
+                    </div>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="font-semibold">Saturday</span>
-                    <span>9:00 AM - 12:30 PM</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-semibold">Sunday</span>
-                    <span>Closed</span>
-                  </div>
+                  <p className="mt-6 text-primary-50 text-sm relative z-10">
+                    * Response time may vary. We typically respond within 24 hours during business days.
+                  </p>
                 </div>
-                <p className="mt-6 text-primary-50 text-sm">
-                  * Response time may vary. We typically respond within 24 hours during business days.
-                </p>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
+            </Tilt>
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
 
       {/* Map Section (Embedded Google Map) */}
       <section className="py-20 bg-gray-50 dark:bg-dark-800">
