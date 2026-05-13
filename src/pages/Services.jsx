@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import Tilt from 'react-parallax-tilt';
 import SEO from '../components/SEO';
+import ParticleBackground from '../components/ParticleBackground';
 import { 
   Server, 
   Code, 
@@ -14,27 +17,38 @@ import {
   Check
 } from 'lucide-react';
 
+const elegantReveal = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } 
+  },
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const modalVariants = {
+  hidden: { opacity: 0, scale: 0.95, y: 20 },
+  visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } },
+  exit: { opacity: 0, scale: 0.95, y: 20, transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] } }
+};
+
 const Services = () => {
   const [selectedService, setSelectedService] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in-up');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    document.querySelectorAll('.scroll-animate').forEach((el) => observer.observe(el));
-    
-    return () => observer.disconnect();
   }, []);
 
   const services = [
@@ -164,89 +178,121 @@ const Services = () => {
     if (!service) return null;
 
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
-        <div className="bg-white dark:bg-dark-800 rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl animate-fade-in-up">
-          {/* Header */}
-          <div className="sticky top-0 bg-gradient-to-r from-primary-600 to-primary-700 text-white p-6 rounded-t-2xl flex justify-between items-start">
-            <div>
-              <div className="flex items-center space-x-3 mb-2">
-                <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
-                  <service.icon className="w-6 h-6" />
-                </div>
-                <h3 className="text-2xl font-bold">{service.title}</h3>
-              </div>
-              <p className="text-primary-50">{service.shortDescription}</p>
-            </div>
-            <button
-              onClick={onClose}
-              className="p-2 hover:bg-white/20 rounded-lg transition-colors duration-200"
-              aria-label="Close modal"
-            >
-              <X className="w-6 h-6" />
-            </button>
-          </div>
-
-          {/* Content */}
-          <div className="p-6 space-y-6">
-            {/* Description */}
-            <div>
-              <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                Overview
-              </h4>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                {service.longDescription}
-              </p>
-            </div>
-
-            {/* Features */}
-            <div>
-              <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                Key Features
-              </h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {service.features.map((feature, idx) => (
-                  <div key={idx} className="flex items-start space-x-2">
-                    <Check className="w-5 h-5 text-primary-600 dark:text-primary-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-600 dark:text-gray-300 text-sm">
-                      {feature}
-                    </span>
+      <AnimatePresence>
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md"
+        >
+          <motion.div 
+            variants={modalVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="bg-white dark:bg-dark-800 rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-100 dark:border-dark-700 relative"
+          >
+            {/* Header */}
+            <div className="sticky top-0 bg-gradient-to-r from-primary-600 to-indigo-600 dark:from-primary-600 dark:to-indigo-600 text-white p-6 md:p-8 rounded-t-3xl flex justify-between items-start z-10">
+              <div className="absolute inset-0 bg-white/10 dark:bg-black/10 backdrop-blur-md pointer-events-none rounded-t-3xl"></div>
+              <div className="relative z-10 w-full">
+                <div className="flex justify-between items-start">
+                  <div className="flex items-center space-x-4 mb-4">
+                    <div className="w-14 h-14 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20">
+                      <service.icon className="w-7 h-7" />
+                    </div>
+                    <h3 className="text-2xl md:text-3xl font-bold tracking-tight">{service.title}</h3>
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Technologies */}
-            <div>
-              <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                Technologies We Use
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {service.technologies.map((tech, idx) => (
-                  <span
-                    key={idx}
-                    className="px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium"
+                  <button
+                    onClick={onClose}
+                    className="p-2 hover:bg-white/20 bg-white/10 backdrop-blur-sm rounded-full transition-colors duration-200"
+                    aria-label="Close modal"
                   >
-                    {tech}
-                  </span>
-                ))}
+                    <X className="w-6 h-6" />
+                  </button>
+                </div>
+                <p className="text-primary-50 text-lg">{service.shortDescription}</p>
               </div>
             </div>
 
-            {/* CTA */}
-            <div className="pt-4 border-t border-gray-200 dark:border-dark-700">
-              <button
-                onClick={() => {
-                  onClose();
-                  navigate('/contact');
-                }}
-                className="btn-primary w-full text-center block"
-              >
-                Get Started with This Service
-              </button>
+            {/* Content */}
+            <div className="p-6 md:p-8 space-y-8">
+              {/* Description */}
+              <div>
+                <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+                  <span className="w-8 h-1 bg-primary-500 rounded-full mr-3"></span>
+                  Overview
+                </h4>
+                <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-lg">
+                  {service.longDescription}
+                </p>
+              </div>
+
+              {/* Features */}
+              <div>
+                <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+                  <span className="w-8 h-1 bg-indigo-500 rounded-full mr-3"></span>
+                  Key Features
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {service.features.map((feature, idx) => (
+                    <motion.div 
+                      key={idx} 
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: idx * 0.1 }}
+                      className="flex items-center space-x-3 bg-gray-50 dark:bg-dark-900/50 p-4 rounded-xl border border-gray-100 dark:border-dark-700/50"
+                    >
+                      <div className="w-6 h-6 bg-primary-100 dark:bg-primary-900/40 rounded-full flex items-center justify-center flex-shrink-0">
+                        <Check className="w-3.5 h-3.5 text-primary-600 dark:text-primary-400" />
+                      </div>
+                      <span className="text-gray-700 dark:text-gray-300 font-medium text-sm md:text-base">
+                        {feature}
+                      </span>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Technologies */}
+              <div>
+                <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+                  <span className="w-8 h-1 bg-blue-500 rounded-full mr-3"></span>
+                  Technologies We Use
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {service.technologies.map((tech, idx) => (
+                    <motion.span
+                      key={idx}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: idx * 0.05 }}
+                      className="px-4 py-2 bg-white dark:bg-dark-800 border border-gray-200 dark:border-dark-700 text-gray-800 dark:text-gray-200 rounded-full text-sm font-semibold shadow-sm hover:border-primary-500/50 hover:text-primary-500 transition-colors"
+                    >
+                      {tech}
+                    </motion.span>
+                  ))}
+                </div>
+              </div>
+
+              {/* CTA */}
+              <div className="pt-8 border-t border-gray-100 dark:border-dark-700">
+                <button
+                  onClick={() => {
+                    onClose();
+                    navigate('/contact');
+                  }}
+                  className="w-full relative group overflow-hidden bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-2xl py-4 sm:py-5 px-8 font-semibold text-lg hover:shadow-2xl hover:shadow-primary-500/20 transition-all duration-300 transform hover:-translate-y-1 block text-center"
+                >
+                  <span className="relative z-10 transition-colors duration-300 group-hover:text-white">Get Started with This Service</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary-600 to-indigo-600 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out z-0"></div>
+                </button>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
+          </motion.div>
+        </motion.div>
+      </AnimatePresence>
     );
   };
 
@@ -257,67 +303,133 @@ const Services = () => {
         description="Comprehensive technology services including DevOps consulting, cloud solutions, custom software development, mobile apps, security, and infrastructure management."
         keywords="DevOps services, cloud migration, AWS consulting, Azure services, custom software, mobile app development, infrastructure management, security consulting, database solutions"
       />
-      <div className="min-h-screen pt-20">
+      
+      <div className="min-h-screen pt-20 relative overflow-hidden bg-gray-50 dark:bg-black">
+        
+        {/* Interactive Particles Background */}
+        <ParticleBackground />
+
+        {/* Abstract animated blurred glow */}
+        <div className="absolute top-[-20%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-primary-500/10 dark:bg-primary-500/20 blur-[100px] -z-10 animate-float translate-z-0 pointer-events-none"></div>
+        <div className="absolute bottom-[20%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-indigo-500/10 dark:bg-indigo-500/10 blur-[120px] -z-10 animate-float translate-z-0 pointer-events-none" style={{ animationDelay: '2s' }}></div>
+
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-primary-50 via-white to-primary-100 dark:from-dark-900 dark:via-dark-800 dark:to-dark-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="section-title animate-fade-in">Our Services</h1>
-          <p className="section-subtitle animate-fade-in" style={{ animationDelay: '100ms' }}>
+      <section className="py-20 relative z-10">
+        <motion.div 
+          initial="hidden"
+          animate="visible"
+          variants={staggerContainer}
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
+        >
+          <motion.h1 
+            variants={elegantReveal}
+            className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white mb-6"
+          >
+            Our Services
+          </motion.h1>
+          <motion.p 
+            variants={elegantReveal}
+            className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto"
+          >
             Comprehensive solutions to power your digital transformation
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
       </section>
 
       {/* Services Grid */}
-      <section className="py-20 bg-white dark:bg-dark-900">
+      <section className="py-20 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+          >
             {services.map((service, index) => (
-              <div
+              <motion.div
                 key={index}
-                className="card p-8 cursor-pointer scroll-animate group"
-                style={{ animationDelay: `${index * 50}ms` }}
-                onClick={() => setSelectedService(service)}
+                variants={elegantReveal}
+                className="h-full"
               >
-                {/* Icon */}
-                <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center mb-6 transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
-                  <service.icon className="w-8 h-8 text-white" />
-                </div>
+                <Tilt
+                  tiltMaxAngleX={3}
+                  tiltMaxAngleY={3}
+                  perspective={1500}
+                  scale={1.02}
+                  transitionSpeed={2000}
+                  className="h-full"
+                >
+                  <div
+                    className="bg-white/80 dark:bg-dark-800/80 backdrop-blur-xl rounded-3xl p-8 h-full cursor-pointer shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-dark-700/50 hover:border-primary-500/30 dark:hover:border-primary-500/30 transition-all duration-500 group relative overflow-hidden flex flex-col"
+                    onClick={() => setSelectedService(service)}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                    
+                    {/* Icon */}
+                    <div className="relative z-10 mb-6">
+                      <div className="absolute inset-0 bg-primary-500 rounded-2xl blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-500 w-16 h-16"></div>
+                      <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-indigo-600 rounded-2xl flex items-center justify-center transform group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 shadow-lg relative z-20">
+                        <service.icon className="w-8 h-8 text-white" />
+                      </div>
+                    </div>
 
-                {/* Title */}
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-200">
-                  {service.title}
-                </h3>
+                    {/* Title */}
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 relative z-10">
+                      {service.title}
+                    </h3>
 
-                {/* Description */}
-                <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
-                  {service.shortDescription}
-                </p>
+                    {/* Description */}
+                    <p className="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed relative z-10 flex-grow">
+                      {service.shortDescription}
+                    </p>
 
-                {/* Learn More Link */}
-                <div className="flex items-center text-primary-600 dark:text-primary-400 font-semibold group-hover:gap-2 transition-all duration-300">
-                  <span>Learn More</span>
-                  <span className="transform group-hover:translate-x-2 transition-transform duration-300">
-                    →
-                  </span>
-                </div>
-              </div>
+                    {/* Learn More Link */}
+                    <div className="flex items-center text-primary-600 dark:text-primary-400 font-semibold group-hover:gap-3 transition-all duration-300 relative z-10 mt-auto">
+                      <span>Learn More</span>
+                      <span className="transform group-hover:translate-x-1 transition-transform duration-300">
+                        →
+                      </span>
+                    </div>
+                  </div>
+                </Tilt>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Why Choose Our Services */}
-      <section className="py-20 bg-gray-50 dark:bg-dark-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 scroll-animate">
-            <h2 className="section-title">Why Choose Our Services?</h2>
-            <p className="section-subtitle">
-              We deliver excellence through experience and expertise
-            </p>
-          </div>
+      <section className="py-24 relative z-10 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900 border-t border-white/5"></div>
+        {/* Animated background elements */}
+        <div className="absolute inset-0 opacity-20 pointer-events-none">
+          <div className="absolute top-0 right-0 w-[40vw] h-[40vw] rounded-full bg-primary-500 blur-[80px] animate-float"></div>
+          <div className="absolute bottom-0 left-0 w-[40vw] h-[40vw] rounded-full bg-indigo-500 blur-[80px] animate-float" style={{ animationDelay: '2s' }}></div>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="text-center mb-16"
+          >
+            <motion.h2 variants={elegantReveal} className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">Why Choose Our Services?</motion.h2>
+            <motion.div variants={elegantReveal} className="w-20 h-1 bg-primary-500 mx-auto rounded-full mb-6"></motion.div>
+            <motion.p variants={elegantReveal} className="text-xl text-primary-100/80 max-w-3xl mx-auto">
+              We deliver excellence through experience and expertise
+            </motion.p>
+          </motion.div>
+
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          >
             {[
               {
                 title: 'Proven Expertise',
@@ -332,39 +444,52 @@ const Services = () => {
                 description: 'We don\'t just deliver and disappear. We provide continuous support and maintenance.',
               },
             ].map((benefit, index) => (
-              <div
+              <motion.div
                 key={index}
-                className="bg-white dark:bg-dark-900 rounded-xl p-8 shadow-lg scroll-animate"
-                style={{ animationDelay: `${index * 100}ms` }}
+                variants={elegantReveal}
+                whileHover={{ y: -10 }}
+                className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 hover:bg-white/10 transition-colors duration-300"
               >
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                <div className="w-12 h-12 rounded-xl bg-primary-500/20 flex items-center justify-center mb-6">
+                  <span className="text-primary-300 font-bold text-xl">0{index + 1}</span>
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-4">
                   {benefit.title}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400">
+                <p className="text-white/70 leading-relaxed text-lg">
                   {benefit.description}
                 </p>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-primary-600 to-primary-800 text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center scroll-animate">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+      <section className="py-24 relative z-10 text-center">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+          className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
+        >
+          <motion.h2 variants={elegantReveal} className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-6">
             Ready to Get Started?
-          </h2>
-          <p className="text-xl text-primary-50 mb-8">
-            Let's discuss how our services can help you achieve your goals.
-          </p>
-          <button
-            onClick={() => navigate('/contact')}
-            className="inline-block px-8 py-4 bg-white text-primary-600 rounded-lg font-semibold hover:bg-primary-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-          >
-            Contact Us Today
-          </button>
-        </div>
+          </motion.h2>
+          <motion.p variants={elegantReveal} className="text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-2xl mx-auto">
+            Let's discuss how our services can help you achieve your business goals.
+          </motion.p>
+          <motion.div variants={elegantReveal}>
+            <button
+              onClick={() => navigate('/contact')}
+              className="relative group overflow-hidden bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-full py-4 sm:py-5 px-10 font-bold text-lg hover:shadow-2xl hover:shadow-primary-500/20 transition-all duration-300 transform hover:-translate-y-1 inline-block"
+            >
+              <span className="relative z-10 transition-colors duration-300 group-hover:text-white">Contact Us Today</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-primary-600 to-indigo-600 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out z-0"></div>
+            </button>
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* Modal */}

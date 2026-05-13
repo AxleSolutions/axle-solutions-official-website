@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import Preloader from './components/Preloader';
 import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
@@ -11,6 +12,7 @@ import Contact from './pages/Contact';
 function App() {
   return (
     <ThemeProvider>
+      <Preloader />
       <Router>
         <div className="flex flex-col min-h-screen">
           <Navbar />

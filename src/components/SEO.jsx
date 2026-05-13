@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 
 const SEO = ({ 
@@ -14,93 +14,65 @@ const SEO = ({
   const siteUrl = 'https://www.axlesolutions.web.lk'; // Update with your actual domain
   const currentUrl = canonical || `${siteUrl}${location.pathname}`;
 
-  useEffect(() => {
-    // Update document title
-    document.title = title;
+  return (
+    <Helmet>
+      {/* Primary Meta Tags */}
+      <title>{title}</title>
+      <meta name="title" content={title} />
+      <meta name="description" content={description} />
+      <meta name="keywords" content={keywords} />
+      <meta name="author" content={author} />
+      <meta name="robots" content="index, follow" />
+      <meta name="language" content="English" />
+      <meta name="revisit-after" content="7 days" />
 
-    // Update or create meta tags
-    const updateMetaTag = (name, content, isProperty = false) => {
-      const attribute = isProperty ? 'property' : 'name';
-      let element = document.querySelector(`meta[${attribute}="${name}"]`);
-      
-      if (!element) {
-        element = document.createElement('meta');
-        element.setAttribute(attribute, name);
-        document.head.appendChild(element);
-      }
-      
-      element.setAttribute('content', content);
-    };
+      {/* Open Graph / Facebook */}
+      <meta property="og:type" content={type} />
+      <meta property="og:url" content={currentUrl} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:image" content={image} />
+      <meta property="og:site_name" content="Axle Solutions" />
+      <meta property="og:locale" content="en_US" />
 
-    // Basic meta tags
-    updateMetaTag('description', description);
-    updateMetaTag('keywords', keywords);
-    updateMetaTag('author', author);
-    updateMetaTag('robots', 'index, follow');
-    updateMetaTag('language', 'English');
-    updateMetaTag('revisit-after', '7 days');
+      {/* Twitter */}
+      <meta property="twitter:card" content="summary_large_image" />
+      <meta property="twitter:url" content={currentUrl} />
+      <meta property="twitter:title" content={title} />
+      <meta property="twitter:description" content={description} />
+      <meta property="twitter:image" content={image} />
+      <meta property="twitter:site" content="@axlesolutions" />
+      <meta property="twitter:creator" content="@axlesolutions" />
 
-    // Open Graph meta tags
-    updateMetaTag('og:title', title, true);
-    updateMetaTag('og:description', description, true);
-    updateMetaTag('og:type', type, true);
-    updateMetaTag('og:url', currentUrl, true);
-    updateMetaTag('og:image', image, true);
-    updateMetaTag('og:site_name', 'Axle Solutions', true);
-    updateMetaTag('og:locale', 'en_US', true);
+      {/* Canonical URL */}
+      <link rel="canonical" href={currentUrl} />
 
-    // Twitter Card meta tags
-    updateMetaTag('twitter:card', 'summary_large_image');
-    updateMetaTag('twitter:title', title);
-    updateMetaTag('twitter:description', description);
-    updateMetaTag('twitter:image', image);
-    updateMetaTag('twitter:site', '@axlesolutions');
-    updateMetaTag('twitter:creator', '@axlesolutions');
-
-    // Canonical URL
-    let canonicalLink = document.querySelector('link[rel="canonical"]');
-    if (!canonicalLink) {
-      canonicalLink = document.createElement('link');
-      canonicalLink.setAttribute('rel', 'canonical');
-      document.head.appendChild(canonicalLink);
-    }
-    canonicalLink.setAttribute('href', currentUrl);
-
-    // Structured Data (JSON-LD)
-    let scriptTag = document.querySelector('script[type="application/ld+json"]');
-    if (!scriptTag) {
-      scriptTag = document.createElement('script');
-      scriptTag.setAttribute('type', 'application/ld+json');
-      document.head.appendChild(scriptTag);
-    }
-
-    const structuredData = {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Axle Solutions",
-      "url": siteUrl,
-      "logo": `${siteUrl}/logo.svg`,
-      "description": description,
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "LK"
-      },
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "email": "info@axlesolutions.com",
-        "contactType": "Customer Service"
-      },
-      "sameAs": [
-        "https://github.com/axle-solutions",
-        "https://www.linkedin.com/company/axle-solutions"
-      ]
-    };
-
-    scriptTag.textContent = JSON.stringify(structuredData);
-
-  }, [title, description, keywords, image, type, author, currentUrl, location]);
-
-  return null;
+      {/* Structured Data (JSON-LD) */}
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "Axle Solutions",
+          "url": siteUrl,
+          "logo": `${siteUrl}/logo.svg`,
+          "description": description,
+          "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "LK"
+          },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "info@axlesolutions.com",
+            "contactType": "Customer Service"
+          },
+          "sameAs": [
+            "https://github.com/axle-solutions",
+            "https://www.linkedin.com/company/axle-solutions"
+          ]
+        })}
+      </script>
+    </Helmet>
+  );
 };
 
 export default SEO;
